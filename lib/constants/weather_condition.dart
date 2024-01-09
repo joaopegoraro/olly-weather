@@ -11,7 +11,7 @@ enum WeatherCondition {
   final String value;
 
   factory WeatherCondition.fromValue(
-    String value, {
+    String? value, {
     WeatherCondition fallback = WeatherCondition.atmospheric,
   }) {
     return WeatherCondition.values.firstWhere(
