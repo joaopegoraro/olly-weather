@@ -11,8 +11,8 @@ import 'package:olly_weather/models/weather.dart';
 
 abstract class ApiService {
   Future<List<Weather>?> getForecast(
-    String latitude,
-    String longitude, {
+    double latitude,
+    double longitude, {
     WeatherUnit unit = WeatherUnit.metric,
   });
 }
@@ -24,8 +24,8 @@ class ApiServiceImpl extends ApiService {
 
   @override
   Future<List<Weather>?> getForecast(
-    String latitude,
-    String longitude, {
+    double latitude,
+    double longitude, {
     WeatherUnit unit = WeatherUnit.imperial,
   }) async {
     return _getData(

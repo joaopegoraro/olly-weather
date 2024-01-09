@@ -3,9 +3,9 @@ import 'package:olly_weather/constants/weather_unit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class PreferencesRepository {
-  Future<(String, String)?> findCoordinates();
+  Future<(double latitude, double longitude)?> findCoordinates();
   Future<WeatherUnit> findWeatherUnit();
-  Future<void> saveCoordinates(String latitude, String longitude);
+  Future<void> saveCoordinates(double latitude, double longitude);
   Future<void> saveWeatherUnit(WeatherUnit unit);
   Future<void> clear();
 }
@@ -24,10 +24,10 @@ class PreferencesRepositoryImpl extends PreferencesRepository {
   }
 
   @override
-  Future<(String, String)?> findCoordinates() async {
+  Future<(double latitude, double longitude)?> findCoordinates() async {
     final prefs = await SharedPreferences.getInstance();
-    final latitude = prefs.getString(_latitudeKey);
-    final longitude = prefs.getString(_longitudeKey);
+    final latitude = prefs.getDouble(_latitudeKey);
+    final longitude = prefs.getDouble(_longitudeKey);
 
     if (longitude == null || latitude == null) {
       return null;
@@ -44,10 +44,10 @@ class PreferencesRepositoryImpl extends PreferencesRepository {
   }
 
   @override
-  Future<void> saveCoordinates(String latitude, String longitude) async {
+  Future<void> saveCoordinates(double latitude, double longitude) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_latitudeKey, latitude);
-    await prefs.setString(_longitudeKey, longitude);
+    await prefs.setDouble(_latitudeKey, latitude);
+    await prefs.setDouble(_longitudeKey, longitude);
   }
 
   @override
