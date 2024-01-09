@@ -26,7 +26,8 @@ class Weather {
       description: map['weather'][0]['description'] as String,
       condition: WeatherCondition.fromValue(map['weather'][0]['main']),
       // 'dt' is in seconds, UTC
-      date: DateTime.fromMillisecondsSinceEpoch(map['dt'] * 1000, isUtc: true),
+      date: DateTime.fromMillisecondsSinceEpoch(map['dt'] * 1000, isUtc: true)
+          .toLocal(),
     );
   }
 }
