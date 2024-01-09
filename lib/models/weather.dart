@@ -25,8 +25,8 @@ class Weather {
       maxTemperature: map['main']['temp_max'] as double,
       description: map['weather'][0]['description'] as String,
       condition: WeatherCondition.fromValue(map['weather'][0]['main']),
-      // 'dt' is in seconds
-      date: DateTime.fromMillisecondsSinceEpoch(map['dt'] * 1000),
+      // 'dt' is in seconds, UTC
+      date: DateTime.fromMillisecondsSinceEpoch(map['dt'] * 1000, isUtc: true),
     );
   }
 }
