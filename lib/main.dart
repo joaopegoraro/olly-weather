@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl_standalone.dart';
 import 'package:olly_weather/ui/login/login_screen.dart';
+import 'package:olly_weather/ui/theme/theme.dart';
 
 void main() async {
   // due to the next lines the main method is now async so this is necessary,
@@ -32,10 +33,7 @@ class OllyWeatherApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Olly Weather',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: OllyWeatherTheme.themeData,
       home: const LoginScreen(),
     );
   }
