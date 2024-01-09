@@ -5,11 +5,16 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:olly_weather/constants/weather_unit.dart';
 import 'package:olly_weather/data/services/logging_service.dart';
 import 'package:olly_weather/models/weather.dart';
 
 abstract class ApiService {
-  Future<List<Weather>?> getForecast(String latitude, String longitude);
+  Future<List<Weather>?> getForecast(
+    String latitude,
+    String longitude, {
+    WeatherUnit unit = WeatherUnit.metric,
+  });
 }
 
 class ApiServiceImpl extends ApiService {
@@ -18,15 +23,22 @@ class ApiServiceImpl extends ApiService {
   final LoggingService _logger;
 
   @override
-  Future<List<Weather>?> getForecast(String latitude, String longitude) async {
+  Future<List<Weather>?> getForecast(
+    String latitude,
+    String longitude, {
+    WeatherUnit unit = WeatherUnit.imperial,
+  }) async {
     return _getData(
       queryParameters: {
         "lat": latitude,
         "lon": longitude,
+        "units": unit.value,
       },
       parseResponse: (response) {
-        final List forecast = jsonDecode(response.body);
-        return forecast.map((weather) => Weather.fromMap(weather)).toList();
+        final Map<String, dynamic> forecast = jsonDecode(response.body);
+        return forecast["list"]
+            .map((weather) => Weather.fromMap(weather))
+            .toList();
       },
     );
   }
