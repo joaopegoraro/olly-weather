@@ -4,6 +4,7 @@ import 'package:mvvm_riverpod/mvvm_riverpod.dart';
 import 'package:olly_weather/ui/components/dialog.dart';
 import 'package:olly_weather/ui/components/navigator.dart';
 import 'package:olly_weather/ui/components/snackbar.dart';
+import 'package:olly_weather/ui/home/empty_list_indicator.dart';
 import 'package:olly_weather/ui/home/home_model.dart';
 import 'package:olly_weather/ui/home/settings_dialog.dart';
 import 'package:olly_weather/ui/home/topbar.dart';
@@ -85,29 +86,22 @@ class _HomeScreenState extends State<HomeScreen> {
                   openSettings: model.openSettingsDialog,
                   onLogout: model.openLogoutDialog,
                 ),
-                Container(
-                  padding: const EdgeInsets.all(32),
-                  child: model.weatherListByDate.isEmpty
-                      ? Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            IconButton(
-                              onPressed: () => model
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Container(
+                      padding: const EdgeInsets.all(32),
+                      child: model.weatherListByDate.isEmpty
+                          ? EmptyListIndicator(
+                              refreshPage: () => model
                                   .updateCoordinates()
                                   .then((_) => model.updateWeather()),
-                              icon: const Icon(Icons.gps_fixed),
+                            )
+                          : WeatherList(
+                              weatherListByDate: model.weatherListByDate,
+                              weatherUnit: model.weatherUnit,
                             ),
-                            const SizedBox(height: 20),
-                            const Text(
-                              "No weather data found. Try clicking on the tracking icon in the topbar to update your coordinates and fetch the weather data for your location",
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        )
-                      : WeatherList(
-                          weatherListByDate: model.weatherListByDate,
-                          weatherUnit: model.weatherUnit,
-                        ),
+                    ),
+                  ),
                 ),
               ],
             );
@@ -130,21 +124,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   body: Container(
                     padding: const EdgeInsets.all(32),
                     child: model.weatherListByDate.isEmpty
-                        ? Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              IconButton(
-                                onPressed: () => model
-                                    .updateCoordinates()
-                                    .then((_) => model.updateWeather()),
-                                icon: const Icon(Icons.gps_fixed),
-                              ),
-                              const SizedBox(height: 20),
-                              const Text(
-                                "No weather data found. Try clicking on the tracking icon in the topbar to update your coordinates and fetch the weather data for your location",
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
+                        ? EmptyListIndicator(
+                            refreshPage: () => model
+                                .updateCoordinates()
+                                .then((_) => model.updateWeather()),
                           )
                         : WeatherList(
                             weatherListByDate: model.weatherListByDate,

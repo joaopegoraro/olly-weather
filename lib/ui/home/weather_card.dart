@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:olly_weather/constants/weather_condition.dart';
@@ -45,6 +46,7 @@ class WeatherCard extends StatelessWidget {
         child: Column(
           children: [
             Row(
+              mainAxisSize: kIsWeb ? MainAxisSize.min : MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
