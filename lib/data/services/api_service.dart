@@ -36,8 +36,10 @@ class ApiServiceImpl extends ApiService {
       },
       parseResponse: (response) {
         final Map<String, dynamic> forecast = jsonDecode(response.body);
-        return forecast["list"]
-            .map((weather) => Weather.fromMap(weather))
+        final List weatherList = forecast['list'];
+        final String? cityName = forecast["city"]["name"];
+        return weatherList
+            .map((weather) => Weather.fromMap(weather).copyWith(city: cityName))
             .toList();
       },
     );

@@ -3,7 +3,7 @@ import 'package:olly_weather/constants/weather_unit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class PreferencesRepository {
-  Future<(double latitude, double longitude)?> findCoordinates();
+  Future<(double? latitude, double? longitude)> findCoordinates();
   Future<WeatherUnit> findWeatherUnit();
   Future<void> saveCoordinates(double latitude, double longitude);
   Future<void> saveWeatherUnit(WeatherUnit unit);
@@ -24,14 +24,10 @@ class PreferencesRepositoryImpl extends PreferencesRepository {
   }
 
   @override
-  Future<(double latitude, double longitude)?> findCoordinates() async {
+  Future<(double? latitude, double? longitude)> findCoordinates() async {
     final prefs = await SharedPreferences.getInstance();
     final latitude = prefs.getDouble(_latitudeKey);
     final longitude = prefs.getDouble(_longitudeKey);
-
-    if (longitude == null || latitude == null) {
-      return null;
-    }
 
     return (latitude, longitude);
   }

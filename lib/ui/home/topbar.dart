@@ -4,11 +4,13 @@ class Topbar extends StatelessWidget implements PreferredSizeWidget {
   const Topbar({
     super.key,
     required this.title,
+    required this.onGeolocate,
     required this.openSettings,
     required this.onLogout,
   });
 
   final String title;
+  final VoidCallback onGeolocate;
   final VoidCallback openSettings;
   final VoidCallback onLogout;
 
@@ -29,6 +31,13 @@ class Topbar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       actions: [
+        IconButton(
+          onPressed: onGeolocate,
+          icon: Icon(
+            Icons.gps_fixed,
+            color: colorScheme.onPrimary,
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.only(right: 16.0),
           child: PopupMenuButton(
