@@ -38,6 +38,7 @@ class Topbar extends StatelessWidget implements PreferredSizeWidget {
             color: colorScheme.onPrimary,
           ),
         ),
+        const SizedBox(width: 10),
         Padding(
           padding: const EdgeInsets.only(right: 16.0),
           child: PopupMenuButton(

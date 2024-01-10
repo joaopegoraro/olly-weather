@@ -6,7 +6,7 @@ import 'package:olly_weather/ui/components/snackbar.dart';
 import 'package:olly_weather/ui/home/home_model.dart';
 import 'package:olly_weather/ui/home/settings_dialog.dart';
 import 'package:olly_weather/ui/home/topbar.dart';
-import 'package:olly_weather/ui/home/weather_card.dart';
+import 'package:olly_weather/ui/home/weather_list.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,20 +16,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late final PageController _pageController;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController(initialPage: 0);
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
-  }
-
   void _onEventEmitted(
     BuildContext context,
     HomeModel model,
@@ -90,76 +76,43 @@ class _HomeScreenState extends State<HomeScreen> {
             return Stack(
               children: [
                 NestedScrollView(
-                    headerSliverBuilder: (_, __) {
-                      return [
-                        Topbar(
-                          title: model.cityName ?? "Welcome!",
-                          onGeolocate: () => model
-                              .updateCoordinates()
-                              .then((_) => model.updateWeather()),
-                          openSettings: model.openSettingsDialog,
-                          onLogout: model.openLogoutDialog,
-                        ),
-                      ];
-                    },
-                    body: Container(
-                        padding: const EdgeInsets.all(32),
-                        child: model.weatherListByDate.isEmpty
-                            ? Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  IconButton(
-                                    onPressed: () => model
-                                        .updateCoordinates()
-                                        .then((_) => model.updateWeather()),
-                                    icon: const Icon(Icons.gps_fixed),
-                                  ),
-                                  const SizedBox(height: 20),
-                                  const Text(
-                                    "No weather data found. Try clicking on the tracking icon in the topbar to update your coordinates and fetch the weather data for your location",
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
-                              )
-                            : PageView.builder(
-                                controller: _pageController,
-                                itemCount: model.weatherListByDate.length,
-                                itemBuilder: (context, index) {
-                                  final weatherList = model
-                                      .weatherListByDate.entries
-                                      .elementAt(index)
-                                      .value;
-                                  return Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          
-                                          Text(
-                                            weatherList.first.weekdayName,
-                                            style: const TextStyle(
-                                              fontSize: 24,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 20),
-                                      Expanded(
-                                        child: ListView(
-                                          children: weatherList.map((weather) {
-                                            return WeatherCard(
-                                              weather: weather,
-                                              unit: model.weatherUnit,
-                                            );
-                                          }).toList(),
-                                        ),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              ))),
+                  headerSliverBuilder: (_, __) {
+                    return [
+                      Topbar(
+                        title: model.cityName ?? "Welcome!",
+                        onGeolocate: () => model
+                            .updateCoordinates()
+                            .then((_) => model.updateWeather()),
+                        openSettings: model.openSettingsDialog,
+                        onLogout: model.openLogoutDialog,
+                      ),
+                    ];
+                  },
+                  body: Container(
+                    padding: const EdgeInsets.all(32),
+                    child: model.weatherListByDate.isEmpty
+                        ? Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              IconButton(
+                                onPressed: () => model
+                                    .updateCoordinates()
+                                    .then((_) => model.updateWeather()),
+                                icon: const Icon(Icons.gps_fixed),
+                              ),
+                              const SizedBox(height: 20),
+                              const Text(
+                                "No weather data found. Try clicking on the tracking icon in the topbar to update your coordinates and fetch the weather data for your location",
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          )
+                        : WeatherList(
+                            weatherListByDate: model.weatherListByDate,
+                            weatherUnit: model.weatherUnit,
+                          ),
+                  ),
+                ),
               ],
             );
           }),
