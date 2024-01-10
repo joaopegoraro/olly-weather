@@ -2,6 +2,7 @@ import 'package:olly_weather/constants/weather_condition.dart';
 
 class Weather {
   Weather({
+    required this.city,
     required this.temperature,
     required this.minTemperature,
     required this.maxTemperature,
@@ -10,6 +11,7 @@ class Weather {
     required this.date,
   });
 
+  final String city;
   final double temperature;
   final double minTemperature;
   final double maxTemperature;
@@ -20,6 +22,7 @@ class Weather {
   factory Weather.fromMap(Map<String, dynamic> map) {
     // response format from https://openweathermap.org/forecast5#parameter
     return Weather(
+      city: map['city']['name'] as String,
       temperature: map['main']['temp'] as double,
       minTemperature: map['main']['temp_min'] as double,
       maxTemperature: map['main']['temp_max'] as double,
