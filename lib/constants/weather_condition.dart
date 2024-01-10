@@ -3,7 +3,13 @@ enum WeatherCondition {
   drizzle("Drizzle"),
   rain("Rain"),
   snow("Snow"),
-  atmospheric("Atmosphere"),
+  mist("Mist"),
+  smoke("Smoke"),
+  haze("Haze"),
+  dust("Dust"),
+  fog("Fog"),
+  sand("Sand"),
+  tornado("Tornado"),
   clear("Clear"),
   clouds("Clouds");
 
@@ -12,7 +18,7 @@ enum WeatherCondition {
 
   factory WeatherCondition.fromValue(
     String? value, {
-    WeatherCondition fallback = WeatherCondition.atmospheric,
+    WeatherCondition fallback = WeatherCondition.haze,
   }) {
     return WeatherCondition.values.firstWhere(
       (element) => element.value == value,

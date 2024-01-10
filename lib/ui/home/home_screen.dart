@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:mvvm_riverpod/mvvm_riverpod.dart';
 import 'package:olly_weather/ui/components/dialog.dart';
 import 'package:olly_weather/ui/components/navigator.dart';
@@ -82,8 +83,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: Container(
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.all(32),
+                      padding: const EdgeInsets.fromLTRB(32, 100, 32, 32),
                       child: model.weatherList.isEmpty
                           ? Column(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -101,7 +101,9 @@ class HomeScreen extends StatelessWidget {
                                 ),
                               ],
                             )
-                          : Text(model.weatherList.toString()),
+                          : Lottie.asset(
+                              'assets/svg/drizzle.json',
+                            ),
                     ),
                   )
                 ],
