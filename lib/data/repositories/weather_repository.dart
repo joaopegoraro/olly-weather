@@ -1,9 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:olly_weather/constants/weather_unit.dart';
 import 'package:olly_weather/data/services/api_service.dart';
 import 'package:olly_weather/models/weather.dart';
 
 abstract class WeatherRepository {
-  Future<List<Weather>> findWeather(double latitude, double longitude);
+  Future<List<Weather>> findWeather(
+    double latitude,
+    double longitude, {
+    required WeatherUnit unit,
+  });
 }
 
 class WeatherRepositoryImpl extends WeatherRepository {
@@ -14,8 +19,16 @@ class WeatherRepositoryImpl extends WeatherRepository {
   final ApiService _apiService;
 
   @override
-  Future<List<Weather>> findWeather(double latitude, double longitude) async {
-    final weatherList = await _apiService.getForecast(latitude, longitude);
+  Future<List<Weather>> findWeather(
+    double latitude,
+    double longitude, {
+    required WeatherUnit unit,
+  }) async {
+    final weatherList = await _apiService.getForecast(
+      latitude,
+      longitude,
+      unit: unit,
+    );
     return weatherList ?? [];
   }
 }

@@ -1,10 +1,11 @@
 enum WeatherUnit {
-  metric("metric"),
-  imperial("imperial"),
-  standard("standard");
+  metric("metric", "°C"),
+  imperial("imperial", "°F"),
+  standard("standard", "K");
 
-  const WeatherUnit(this.value);
+  const WeatherUnit(this.value, this.simbol);
   final String value;
+  final String simbol;
 
   factory WeatherUnit.fromValue(
     String? value, {

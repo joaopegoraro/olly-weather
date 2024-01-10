@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:mvvm_riverpod/mvvm_riverpod.dart';
 import 'package:olly_weather/ui/components/dialog.dart';
 import 'package:olly_weather/ui/components/navigator.dart';
@@ -7,9 +6,29 @@ import 'package:olly_weather/ui/components/snackbar.dart';
 import 'package:olly_weather/ui/home/home_model.dart';
 import 'package:olly_weather/ui/home/settings_dialog.dart';
 import 'package:olly_weather/ui/home/topbar.dart';
+import 'package:olly_weather/ui/home/weather_card.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late final PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: 0);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   void _onEventEmitted(
     BuildContext context,
@@ -39,6 +58,7 @@ class HomeScreen extends StatelessWidget {
             currentUnit: model.weatherUnit,
             onSave: (newUnit) => model
                 .updateWeatherUnit(newUnit)
+                .then((_) => model.updateWeather())
                 .then((_) => Navigator.of(context).pop()),
           ),
         );
@@ -57,8 +77,7 @@ class HomeScreen extends StatelessWidget {
             // addPostFrameCallback is necessary so the UI updates only
             // after the first draw
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              model.updateWeather();
-              model.fetchWeatherUnit();
+              model.fetchWeatherUnit().then((_) => model.updateWeather());
             });
           },
           builder: (context, model) {
@@ -68,46 +87,71 @@ class HomeScreen extends StatelessWidget {
               );
             }
 
-            return PopScope(
-              canPop: false,
-              onPopInvoked: (_) => model.openLogoutDialog,
-              child: Column(
-                children: [
-                  Topbar(
-                    title: model.weatherList.firstOrNull?.city ?? "Welcome!",
-                    onGeolocate: () => model
-                        .updateCoordinates()
-                        .then((_) => model.updateWeather()),
-                    openSettings: model.openSettingsDialog,
-                    onLogout: model.openLogoutDialog,
-                  ),
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.fromLTRB(32, 100, 32, 32),
-                      child: model.weatherList.isEmpty
-                          ? Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                IconButton(
-                                  onPressed: () => model
-                                      .updateCoordinates()
-                                      .then((_) => model.updateWeather()),
-                                  icon: const Icon(Icons.gps_fixed),
-                                ),
-                                const SizedBox(height: 20),
-                                const Text(
-                                  "No weather data found. Try clicking on the tracking icon in the topbar to update your coordinates and fetch the weather data for your location",
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            )
-                          : Lottie.asset(
-                              'assets/svg/drizzle.json',
-                            ),
-                    ),
-                  )
-                ],
-              ),
+            return Stack(
+              children: [
+                NestedScrollView(
+                    headerSliverBuilder: (_, __) => [
+                          Topbar(
+                            title: model.cityName ?? "Welcome!",
+                            onGeolocate: () => model
+                                .updateCoordinates()
+                                .then((_) => model.updateWeather()),
+                            openSettings: model.openSettingsDialog,
+                            onLogout: model.openLogoutDialog,
+                          ),
+                        ],
+                    body: Container(
+                        padding: const EdgeInsets.all(32),
+                        child: model.weatherListByDate.isEmpty
+                            ? Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  IconButton(
+                                    onPressed: () => model
+                                        .updateCoordinates()
+                                        .then((_) => model.updateWeather()),
+                                    icon: const Icon(Icons.gps_fixed),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  const Text(
+                                    "No weather data found. Try clicking on the tracking icon in the topbar to update your coordinates and fetch the weather data for your location",
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              )
+                            : PageView.builder(
+                                controller: _pageController,
+                                itemCount: model.weatherListByDate.length,
+                                itemBuilder: (context, index) {
+                                  final weatherList = model
+                                      .weatherListByDate.entries
+                                      .elementAt(index)
+                                      .value;
+                                  return Column(
+                                    children: [
+                                      Text(
+                                        weatherList.first.weekdayName,
+                                        style: const TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 20),
+                                      Expanded(
+                                        child: ListView(
+                                          children: weatherList.map((weather) {
+                                            return WeatherCard(
+                                              weather: weather,
+                                              unit: model.weatherUnit,
+                                            );
+                                          }).toList(),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ))),
+              ],
             );
           }),
     );

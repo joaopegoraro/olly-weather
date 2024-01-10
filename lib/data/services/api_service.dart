@@ -13,7 +13,7 @@ abstract class ApiService {
   Future<List<Weather>?> getForecast(
     double latitude,
     double longitude, {
-    WeatherUnit unit = WeatherUnit.metric,
+    required WeatherUnit unit,
   });
 }
 
@@ -26,7 +26,7 @@ class ApiServiceImpl extends ApiService {
   Future<List<Weather>?> getForecast(
     double latitude,
     double longitude, {
-    WeatherUnit unit = WeatherUnit.imperial,
+    required WeatherUnit unit,
   }) async {
     return _getData(
       queryParameters: {

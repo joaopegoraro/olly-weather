@@ -47,8 +47,11 @@ class HomeModel extends ViewModel<HomeEvent> {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  List<Weather> _weatherList = [];
-  List<Weather> get weatherList => _weatherList;
+  String? _cityName;
+  String? get cityName => _cityName;
+
+  Map<DateTime, List<Weather>> _weatherListByDate = {};
+  Map<DateTime, List<Weather>> get weatherListByDate => _weatherListByDate;
 
   WeatherUnit _weatherUnit = WeatherUnit.imperial;
   WeatherUnit get weatherUnit => _weatherUnit;
@@ -117,13 +120,34 @@ class HomeModel extends ViewModel<HomeEvent> {
       );
     }
 
-    final apiResponse = await _weatherRepository.findWeather(
+    final weatherList = await _weatherRepository.findWeather(
       latitude,
       longitude,
+      unit: _weatherUnit,
     );
-    updateUi(() => _weatherList = apiResponse);
 
-    if (_weatherList.isEmpty) {
+    updateUi(() {
+      _cityName = weatherList.firstOrNull?.city;
+      // grouping the weather list by its date (day)
+      _weatherListByDate = weatherList.fold(
+        <DateTime, List<Weather>>{},
+        (map, weather) {
+          final date = DateTime(
+            weather.date.year,
+            weather.date.month,
+            weather.date.day,
+          );
+          map.update(
+            date,
+            (list) => list + [weather],
+            ifAbsent: () => [weather],
+          );
+          return map;
+        },
+      );
+    });
+
+    if (_weatherListByDate.isEmpty) {
       showSnackbar(
         "There was a problem retrieving the weather data",
         HomeEvent.showSnackbarError,

@@ -20,7 +20,7 @@ class Topbar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    return AppBar(
+    return SliverAppBar(
       toolbarHeight: 80,
       backgroundColor: colorScheme.primary,
       automaticallyImplyLeading: false,
