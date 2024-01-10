@@ -11,9 +11,29 @@ class OllyWeatherDialog extends StatelessWidget {
     this.onTapSecondButton,
   });
 
-  static void show({
+  static void showTextDialog({
     required BuildContext context,
     required String content,
+    required String firstButtonText,
+    required String title,
+    VoidCallback? onTapFirstButton,
+    String? secondButtonText,
+    VoidCallback? onTapSecondButton,
+  }) {
+    show(
+      context: context,
+      content: Text(content),
+      firstButtonText: firstButtonText,
+      title: title,
+      onTapFirstButton: onTapFirstButton,
+      secondButtonText: secondButtonText,
+      onTapSecondButton: onTapSecondButton,
+    );
+  }
+
+  static void show({
+    required BuildContext context,
+    required Widget content,
     required String firstButtonText,
     required String title,
     VoidCallback? onTapFirstButton,
@@ -35,7 +55,7 @@ class OllyWeatherDialog extends StatelessWidget {
   }
 
   final String title;
-  final String content;
+  final Widget content;
 
   final String firstButtonText;
   final VoidCallback? onTapFirstButton;
@@ -47,7 +67,7 @@ class OllyWeatherDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(title),
-      content: Text(content),
+      content: content,
       actions: [
         TextButton(
           onPressed: onTapFirstButton ?? Navigator.of(context).pop,

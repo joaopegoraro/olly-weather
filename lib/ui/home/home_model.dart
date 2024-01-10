@@ -1,5 +1,6 @@
 import 'package:mvvm_riverpod/mvvm_riverpod.dart';
 import 'package:olly_weather/constants/geolocation_errors.dart';
+import 'package:olly_weather/constants/weather_unit.dart';
 import 'package:olly_weather/data/repositories/preferences_repository.dart';
 import 'package:olly_weather/data/repositories/weather_repository.dart';
 import 'package:olly_weather/data/services/auth_service.dart';
@@ -49,6 +50,9 @@ class HomeModel extends ViewModel<HomeEvent> {
   List<Weather> _weatherList = [];
   List<Weather> get weatherList => _weatherList;
 
+  WeatherUnit _weatherUnit = WeatherUnit.imperial;
+  WeatherUnit get weatherUnit => _weatherUnit;
+
   void openSettingsDialog() {
     emitEvent(HomeEvent.openSettingsDialog);
   }
@@ -62,6 +66,25 @@ class HomeModel extends ViewModel<HomeEvent> {
     await _prefsRepository.clear();
     showSnackbar("Logout successful!", HomeEvent.showSnackbarSuccess);
     emitEvent(HomeEvent.navigateToLogin);
+  }
+
+  Future<void> fetchWeatherUnit() async {
+    _weatherUnit = await _prefsRepository.findWeatherUnit();
+  }
+
+  Future<void> updateWeatherUnit(WeatherUnit newUnit) async {
+    updateUi(() => _isLoading = true);
+
+    await _prefsRepository.saveWeatherUnit(newUnit);
+    showSnackbar(
+      "Settings updated successfully!",
+      HomeEvent.showSnackbarSuccess,
+    );
+
+    updateUi(() {
+      _weatherUnit = newUnit;
+      _isLoading = false;
+    });
   }
 
   Future<void> updateCoordinates() async {

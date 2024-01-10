@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm_riverpod/mvvm_riverpod.dart';
+import 'package:olly_weather/ui/components/dialog.dart';
 import 'package:olly_weather/ui/components/navigator.dart';
 import 'package:olly_weather/ui/components/snackbar.dart';
 import 'package:olly_weather/ui/home/home_model.dart';
-import 'package:olly_weather/ui/home/logout_dialog.dart';
+import 'package:olly_weather/ui/home/settings_dialog.dart';
 import 'package:olly_weather/ui/home/topbar.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -22,11 +23,24 @@ class HomeScreen extends StatelessWidget {
       case HomeEvent.navigateToLogin:
         OllyWeatherNavigator.navigateToLogin(context);
       case HomeEvent.openLogoutDialog:
+        OllyWeatherDialog.showTextDialog(
+          context: context,
+          title: "Warning",
+          content: "Are you sure? You will go back to the login page",
+          firstButtonText: "I'm sure, log me out",
+          onTapFirstButton: model.logout,
+          secondButtonText: "No, cancel that",
+        );
+      case HomeEvent.openSettingsDialog:
         showDialog(
           context: context,
-          builder: (context) => LogoutDialog(onLogout: model.logout),
+          builder: (context) => SettingsDialog(
+            currentUnit: model.weatherUnit,
+            onSave: (newUnit) => model
+                .updateWeatherUnit(newUnit)
+                .then((_) => Navigator.of(context).pop()),
+          ),
         );
-      default:
     }
   }
 
@@ -41,9 +55,10 @@ class HomeScreen extends StatelessWidget {
             // 'onCreate' is called at the first draw of the screen, this
             // addPostFrameCallback is necessary so the UI updates only
             // after the first draw
-            WidgetsBinding.instance.addPostFrameCallback(
-              (_) => model.updateWeather(),
-            );
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              model.updateWeather();
+              model.fetchWeatherUnit();
+            });
           },
           builder: (context, model) {
             if (model.isLoading) {
