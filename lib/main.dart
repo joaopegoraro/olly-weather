@@ -36,6 +36,7 @@ class OllyWeatherApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Olly Weather',
+      debugShowCheckedModeBanner: false,
       initialRoute: OllyWeatherNavigator.loginRoute,
       routes: {
         OllyWeatherNavigator.loginRoute: (_) => const LoginScreen(),
