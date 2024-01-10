@@ -96,6 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: max(MediaQuery.of(context).size.width * 0.3, 600),
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.background,
+                  borderRadius: BorderRadius.circular(15.0),
                 ),
                 onSubmit: () => model.performLogin(
                   username: _usernameController.text,

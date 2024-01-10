@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:olly_weather/ui/login/login_text_field.dart';
@@ -27,8 +28,11 @@ class LoginPanel extends StatelessWidget {
       padding: const EdgeInsets.all(32),
       width: width,
       decoration: decoration,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      // annoyingly, center aligning in web negates ListView.shrinkWrap, so
+      // this check is necessary
+      alignment: kIsWeb ? null : Alignment.center,
+      child: ListView(
+        shrinkWrap: true,
         children: [
           const SvgPicture(
             AssetBytesLoader('assets/vectors/logo.svg.vec'),
