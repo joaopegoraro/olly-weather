@@ -7,6 +7,7 @@ class OllyWeatherSnackbar extends SnackBar {
     Color? backgroundColor,
   }) : super(
           content: Text(text ?? ""),
+          backgroundColor: backgroundColor,
           behavior: SnackBarBehavior.floating,
           margin: const EdgeInsets.all(12),
           shape: const RoundedRectangleBorder(
