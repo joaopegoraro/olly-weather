@@ -4,7 +4,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:label="olly_weather"
+        android:label="Olly Weather"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

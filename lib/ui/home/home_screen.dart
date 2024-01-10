@@ -90,16 +90,18 @@ class _HomeScreenState extends State<HomeScreen> {
             return Stack(
               children: [
                 NestedScrollView(
-                    headerSliverBuilder: (_, __) => [
-                          Topbar(
-                            title: model.cityName ?? "Welcome!",
-                            onGeolocate: () => model
-                                .updateCoordinates()
-                                .then((_) => model.updateWeather()),
-                            openSettings: model.openSettingsDialog,
-                            onLogout: model.openLogoutDialog,
-                          ),
-                        ],
+                    headerSliverBuilder: (_, __) {
+                      return [
+                        Topbar(
+                          title: model.cityName ?? "Welcome!",
+                          onGeolocate: () => model
+                              .updateCoordinates()
+                              .then((_) => model.updateWeather()),
+                          openSettings: model.openSettingsDialog,
+                          onLogout: model.openLogoutDialog,
+                        ),
+                      ];
+                    },
                     body: Container(
                         padding: const EdgeInsets.all(32),
                         child: model.weatherListByDate.isEmpty
@@ -129,12 +131,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                       .value;
                                   return Column(
                                     children: [
-                                      Text(
-                                        weatherList.first.weekdayName,
-                                        style: const TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          
+                                          Text(
+                                            weatherList.first.weekdayName,
+                                            style: const TextStyle(
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                       const SizedBox(height: 20),
                                       Expanded(

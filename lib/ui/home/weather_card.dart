@@ -29,7 +29,7 @@ class WeatherCard extends StatelessWidget {
       WeatherCondition.tornado => "tornado",
       WeatherCondition.clouds => "cloudy",
       WeatherCondition.clear =>
-        weather.date.hour >= 18 && weather.date.minute >= 30
+        weather.date.hour >= 18 || weather.date.hour <= 5
             ? "clear-night"
             : "clear-day",
     };
@@ -39,6 +39,7 @@ class WeatherCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      surfaceTintColor: Colors.white,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         child: Column(
