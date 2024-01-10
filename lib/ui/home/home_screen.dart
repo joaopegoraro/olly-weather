@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mvvm_riverpod/mvvm_riverpod.dart';
+import 'package:olly_weather/ui/components/navigator.dart';
+import 'package:olly_weather/ui/components/snackbar.dart';
 import 'package:olly_weather/ui/home/home_model.dart';
 import 'package:olly_weather/ui/home/topbar.dart';
-import 'package:olly_weather/ui/login/login_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -14,25 +15,11 @@ class HomeScreen extends StatelessWidget {
   ) {
     switch (event) {
       case HomeEvent.showSnackbarSuccess:
-        final snackBar = SnackBar(
-          content: Text(model.snackbarMessage ?? ""),
-          backgroundColor: Colors.green,
-        );
-        ScaffoldMessenger.of(context).removeCurrentSnackBar();
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        OllyWeatherSnackbar.showSuccess(context, model.snackbarMessage);
       case HomeEvent.showSnackbarError:
-        final snackBar = SnackBar(
-          content: Text(model.snackbarMessage ?? ""),
-          backgroundColor: Colors.red,
-        );
-        ScaffoldMessenger.of(context).removeCurrentSnackBar();
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        OllyWeatherSnackbar.showError(context, model.snackbarMessage);
       case HomeEvent.navigateToLogin:
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const LoginScreen(),
-          ),
-        );
+        OllyWeatherNavigator.navigateToLogin(context);
       default:
     }
   }
@@ -40,7 +27,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody: true,
       body: PopScope(
           canPop: false,
           onPopInvoked: (didPop) {
@@ -76,10 +62,30 @@ class HomeScreen extends StatelessWidget {
                       openSettings: model.openSettingsDialog,
                       onLogout: model.openLogoutDialog,
                     ),
-                    if (model.weatherList.isEmpty)
-                      const Placeholder()
-                    else
-                      Text(model.weatherList.toString()),
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.all(32),
+                        child: model.weatherList.isEmpty
+                            ? Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  IconButton(
+                                    onPressed: () => model
+                                        .updateCoordinates()
+                                        .then((_) => model.updateWeather()),
+                                    icon: const Icon(Icons.gps_fixed),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  const Text(
+                                    "No weather data found. Try clicking on the tracking icon in the topbar to update your coordinates and fetch the weather data for your location",
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              )
+                            : Text(model.weatherList.toString()),
+                      ),
+                    )
                   ],
                 );
               })),

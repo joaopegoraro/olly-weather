@@ -3,7 +3,8 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mvvm_riverpod/mvvm_riverpod.dart';
-import 'package:olly_weather/ui/home/home_screen.dart';
+import 'package:olly_weather/ui/components/navigator.dart';
+import 'package:olly_weather/ui/components/snackbar.dart';
 import 'package:olly_weather/ui/login/login_model.dart';
 import 'package:olly_weather/ui/login/login_panel.dart';
 
@@ -39,25 +40,11 @@ class _LoginScreenState extends State<LoginScreen> {
   ) {
     switch (event) {
       case LoginEvent.showSnackbarSuccess:
-        final snackBar = SnackBar(
-          content: Text(model.snackbarMessage ?? ""),
-          backgroundColor: Colors.green,
-        );
-        ScaffoldMessenger.of(context).removeCurrentSnackBar();
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        OllyWeatherSnackbar.showSuccess(context, model.snackbarMessage);
       case LoginEvent.showSnackbarError:
-        final snackBar = SnackBar(
-          content: Text(model.snackbarMessage ?? ""),
-          backgroundColor: Colors.red,
-        );
-        ScaffoldMessenger.of(context).removeCurrentSnackBar();
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        OllyWeatherSnackbar.showError(context, model.snackbarMessage);
       case LoginEvent.navigateToHome:
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const HomeScreen(),
-          ),
-        );
+        OllyWeatherNavigator.navigateToHome(context);
     }
   }
 
