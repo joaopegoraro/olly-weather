@@ -34,7 +34,10 @@ class LoginModel extends ViewModel<LoginEvent> {
     updateUi(() => _isScreenLoading = false);
   }
 
-  Future<void> performLogin(String username, String password) async {
+  Future<void> performLogin({
+    required String username,
+    required String password,
+  }) async {
     if (username.isEmpty || password.isEmpty) {
       return showSnackbar(
         "The username and password can't be empty!",
