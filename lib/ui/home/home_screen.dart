@@ -64,9 +64,12 @@ class _HomeScreenState extends State<HomeScreen> {
           // 'onCreate' is called at the first draw of the screen, this
           // addPostFrameCallback is necessary so the UI updates only
           // after the first draw
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            model.fetchWeatherUnit().then((_) => model.updateWeather());
-          });
+          WidgetsBinding.instance.addPostFrameCallback(
+            (_) => model
+                .fetchWeatherUnit()
+                .then((_) => model.updateCoordinates())
+                .then((_) => model.updateWeather()),
+          );
         },
         builder: (context, model) {
           if (model.isLoading) {
