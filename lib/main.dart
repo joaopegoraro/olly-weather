@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:olly_weather/ui/components/navigator.dart';
+import 'package:olly_weather/ui/home/home_screen.dart';
 import 'package:olly_weather/ui/login/login_screen.dart';
 import 'package:olly_weather/ui/theme/theme.dart';
 
@@ -27,8 +29,12 @@ class OllyWeatherApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Olly Weather',
+      initialRoute: OllyWeatherNavigator.loginRoute,
+      routes: {
+        OllyWeatherNavigator.loginRoute: (_) => const LoginScreen(),
+        OllyWeatherNavigator.homeRoute: (_) => const HomeScreen(),
+      },
       theme: OllyWeatherTheme.themeData,
-      home: const LoginScreen(),
     );
   }
 }

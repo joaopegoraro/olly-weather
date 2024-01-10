@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:olly_weather/ui/home/home_screen.dart';
-import 'package:olly_weather/ui/login/login_screen.dart';
 
 class OllyWeatherNavigator {
   const OllyWeatherNavigator._();
 
+  static const loginRoute = "/login";
+  static const homeRoute = "/home";
+
   static void navigateToHome(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const HomeScreen(),
-      ),
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      homeRoute,
+      (route) => false,
     );
   }
 
   static void navigateToLogin(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const LoginScreen(),
-      ),
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      loginRoute,
+      (route) => false,
     );
   }
 }

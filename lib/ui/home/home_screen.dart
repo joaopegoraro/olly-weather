@@ -54,10 +54,7 @@ class HomeScreen extends StatelessWidget {
 
             return PopScope(
               canPop: false,
-              onPopInvoked: (_) => showDialog(
-                context: context,
-                builder: (context) => LogoutDialog(onLogout: model.logout),
-              ),
+              onPopInvoked: (_) => model.openLogoutDialog,
               child: Column(
                 children: [
                   Topbar(
