@@ -19,6 +19,8 @@ dependencies:
   flutter_riverpod: ^2.4.9
   shared_preferences: ^2.2.2
   geolocator: ^10.1.0
+  flutter_svg: ^2.0.9
+  vector_graphics: ^1.1.9+2
 
 dev_dependencies:
   flutter_test:
@@ -28,3 +30,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - .env
+    - assets/
+    - assets/vectors/
