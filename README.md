@@ -5,7 +5,7 @@
 - [About](#about)
 - [Features](#features)
 - [Images](#images)
-- [Libraries](#libs)
+- [Libraries](#libraries)
 - [API](#api)
 - [How to run?](#how-to-run)
 
@@ -54,7 +54,7 @@ Test project for the Fullstack Flutter engineer position at [Olly Olly](https://
 </p>
 
 
-## [Libraries](#libs)
+## [Libraries](#libraries)
 
 
 - [flutter_dotenv](https://pub.dev/packages/flutter_dotenv)
