@@ -1,7 +1,9 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:olly_weather/ui/login/login_text_field.dart';
+import 'package:olly_weather/ui/theme/spacing.dart';
+import 'package:olly_weather/ui/theme/text.dart';
+import 'package:olly_weather/ui/theme/theme.dart';
 import 'package:vector_graphics/vector_graphics_compat.dart';
 
 class LoginPanel extends StatelessWidget {
@@ -24,42 +26,45 @@ class LoginPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final deviceWidth = MediaQuery.of(context).size.width;
+    final isWebDesign = deviceWidth > OllyWeatherTheme.mobileWidth;
+
     return Container(
-      padding: const EdgeInsets.all(32),
+      padding: const EdgeInsets.all(OllyWeatherSpacing.largePadding),
       width: width,
       decoration: decoration,
       // annoyingly, center aligning in web negates ListView.shrinkWrap, so
       // this check is necessary
-      alignment: kIsWeb ? null : Alignment.center,
+      alignment: isWebDesign ? null : Alignment.center,
       child: ListView(
         shrinkWrap: true,
         children: [
           const SvgPicture(
             AssetBytesLoader('assets/vectors/logo.svg.vec'),
           ),
-          const SizedBox(height: 40),
+          OllyWeatherSpacing.verticalSpaceLarge,
           LoginTextField(
             controller: usernameController,
             label: 'Username',
             isPassword: false,
           ),
-          const SizedBox(height: 10),
+          OllyWeatherSpacing.verticalSpaceSmall,
           LoginTextField(
             controller: passwordController,
             label: 'Password',
             isPassword: true,
           ),
-          const SizedBox(height: 20),
+          OllyWeatherSpacing.verticalSpaceRegular,
           ElevatedButton(
             child: Container(
               width: double.infinity,
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(OllyWeatherSpacing.mediumPadding),
               alignment: Alignment.center,
               child: isLoading
                   ? const CircularProgressIndicator()
                   : const Text(
                       "SIGN IN",
-                      style: TextStyle(fontSize: 18),
+                      style: OllyWeatherText.titleStyle,
                     ),
             ),
             onPressed: () {

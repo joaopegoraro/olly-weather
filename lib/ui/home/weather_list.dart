@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:olly_weather/constants/weather_unit.dart';
 import 'package:olly_weather/models/weather.dart';
 import 'package:olly_weather/ui/home/weather_card.dart';
+import 'package:olly_weather/ui/theme/spacing.dart';
+import 'package:olly_weather/ui/theme/text.dart';
 
 class WeatherList extends StatefulWidget {
   const WeatherList({
@@ -50,15 +52,14 @@ class WeatherListState extends State<WeatherList> {
           final isLastElement = index == widget.weatherListByDate.length - 1;
           return Column(
             children: [
-              const SizedBox(height: 40),
+              OllyWeatherSpacing.verticalSpaceLarge,
               Text(
                 list.first.weekdayName,
-                style: const TextStyle(
-                  fontSize: 24,
+                style: OllyWeatherText.largeStyle.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 20),
+              OllyWeatherSpacing.verticalSpaceRegular,
               Wrap(
                 alignment: WrapAlignment.center,
                 children: list.map((weather) {
@@ -71,7 +72,7 @@ class WeatherListState extends State<WeatherList> {
                   );
                 }).toList(),
               ),
-              const SizedBox(height: 40),
+              OllyWeatherSpacing.verticalSpaceLarge,
               if (!isLastElement) const Divider(),
             ],
           );
@@ -101,8 +102,7 @@ class WeatherListState extends State<WeatherList> {
                   ),
                   Text(
                     list.first.weekdayName,
-                    style: const TextStyle(
-                      fontSize: 24,
+                    style: OllyWeatherText.largeStyle.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -119,7 +119,7 @@ class WeatherListState extends State<WeatherList> {
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              OllyWeatherSpacing.verticalSpaceRegular,
               Expanded(
                 child: ListView(
                   children: list.map((weather) {

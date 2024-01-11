@@ -6,6 +6,8 @@ import 'package:olly_weather/ui/components/navigator.dart';
 import 'package:olly_weather/ui/components/snackbar.dart';
 import 'package:olly_weather/ui/login/login_model.dart';
 import 'package:olly_weather/ui/login/login_panel.dart';
+import 'package:olly_weather/ui/theme/spacing.dart';
+import 'package:olly_weather/ui/theme/theme.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -69,7 +71,8 @@ class _LoginScreenState extends State<LoginScreen> {
             );
           }
 
-          final isWebDesign = MediaQuery.of(context).size.width > 680;
+          final deviceWidth = MediaQuery.of(context).size.width;
+          final isWebDesign = deviceWidth > OllyWeatherTheme.mobileWidth;
           if (isWebDesign) {
             return Container(
               decoration: BoxDecoration(
@@ -83,7 +86,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: max(MediaQuery.of(context).size.width * 0.3, 600),
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.background,
-                  borderRadius: BorderRadius.circular(15.0),
+                  borderRadius: BorderRadius.circular(
+                    OllyWeatherSpacing.mediumRadius,
+                  ),
                 ),
                 onSubmit: () => model.performLogin(
                   username: _usernameController.text,

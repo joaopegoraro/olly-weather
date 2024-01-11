@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:olly_weather/ui/theme/spacing.dart';
 
 class LoginTextField extends StatefulWidget {
   const LoginTextField({
@@ -38,7 +39,7 @@ class _LoginTextFieldState extends State<LoginTextField> {
                     : const Icon(Icons.visibility),
               ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0),
+          borderRadius: BorderRadius.circular(OllyWeatherSpacing.mediumRadius),
           borderSide: BorderSide.none,
         ),
       ),

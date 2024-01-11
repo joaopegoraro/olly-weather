@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:olly_weather/ui/theme/spacing.dart';
+import 'package:olly_weather/ui/theme/text.dart';
+import 'package:olly_weather/ui/theme/theme.dart';
 import 'package:vector_graphics/vector_graphics_compat.dart';
 
 class Topbar extends StatelessWidget implements PreferredSizeWidget {
@@ -27,35 +30,42 @@ class Topbar extends StatelessWidget implements PreferredSizeWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     if (isWebDesign) {
       return AppBar(
-        toolbarHeight: 80,
-        leadingWidth: screenWidth > 1000 ? 200 : 150,
+        toolbarHeight: OllyWeatherTheme.appBarHeight,
+        leadingWidth: screenWidth > OllyWeatherTheme.tabletWidth ? 200 : 150,
         backgroundColor: colorScheme.primary,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(30),
-            bottomRight: Radius.circular(30),
+            bottomLeft: Radius.circular(
+              OllyWeatherSpacing.largeRadius,
+            ),
+            bottomRight: Radius.circular(
+              OllyWeatherSpacing.largeRadius,
+            ),
           ),
         ),
         leading: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: EdgeInsets.symmetric(
+            horizontal: OllyWeatherSpacing.bigPadding,
+            vertical: OllyWeatherSpacing.smallPadding,
+          ),
           child: SvgPicture(
             AssetBytesLoader('assets/vectors/logo.svg.vec'),
           ),
         ),
-        centerTitle: screenWidth > 1000,
+        centerTitle: screenWidth > OllyWeatherTheme.tabletWidth,
         title: Text(
           title,
           maxLines: 2,
           textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.w600,
+          style: OllyWeatherText.largeStyle.copyWith(
             color: colorScheme.onPrimary,
           ),
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(
+              OllyWeatherSpacing.tinyPadding,
+            ),
             child: Wrap(
               children: [
                 ElevatedButton.icon(
@@ -68,9 +78,8 @@ class Topbar extends StatelessWidget implements PreferredSizeWidget {
                     child: Text(
                       "Find your location",
                       maxLines: 2,
-                      style: TextStyle(
-                        color: colorScheme.primary,
-                        fontSize: 16,
+                      style: OllyWeatherText.regularStyle.copyWith(
+                        color: colorScheme.onPrimary,
                       ),
                     ),
                   ),
@@ -79,9 +88,8 @@ class Topbar extends StatelessWidget implements PreferredSizeWidget {
                   onPressed: openSettings,
                   child: Text(
                     'Settings',
-                    style: TextStyle(
+                    style: OllyWeatherText.regularStyle.copyWith(
                       color: colorScheme.onPrimary,
-                      fontSize: 16,
                     ),
                   ),
                 ),
@@ -93,9 +101,8 @@ class Topbar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                   label: Text(
                     "Logout",
-                    style: TextStyle(
+                    style: OllyWeatherText.regularStyle.copyWith(
                       color: colorScheme.onPrimary,
-                      fontSize: 16,
                     ),
                   ),
                 ),
@@ -106,13 +113,17 @@ class Topbar extends StatelessWidget implements PreferredSizeWidget {
       );
     } else {
       return SliverAppBar(
-        toolbarHeight: 80,
+        toolbarHeight: OllyWeatherTheme.appBarHeight,
         backgroundColor: colorScheme.primary,
         automaticallyImplyLeading: false,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(30),
-            bottomRight: Radius.circular(30),
+            bottomLeft: Radius.circular(
+              OllyWeatherSpacing.largeRadius,
+            ),
+            bottomRight: Radius.circular(
+              OllyWeatherSpacing.largeRadius,
+            ),
           ),
         ),
         actions: [
@@ -123,9 +134,11 @@ class Topbar extends StatelessWidget implements PreferredSizeWidget {
               color: colorScheme.onPrimary,
             ),
           ),
-          const SizedBox(width: 10),
+          OllyWeatherSpacing.horizontalSpaceSmall,
           Padding(
-            padding: const EdgeInsets.only(right: 16.0),
+            padding: const EdgeInsets.only(
+              right: OllyWeatherSpacing.mediumPadding,
+            ),
             child: PopupMenuButton(
               child: Icon(
                 Icons.more_vert,
@@ -147,9 +160,7 @@ class Topbar extends StatelessWidget implements PreferredSizeWidget {
         title: Text(
           title,
           maxLines: 2,
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.w600,
+          style: OllyWeatherText.largeStyle.copyWith(
             color: colorScheme.onPrimary,
           ),
         ),

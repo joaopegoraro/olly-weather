@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:olly_weather/ui/theme/spacing.dart';
 
 class OllyWeatherSnackbar extends SnackBar {
   OllyWeatherSnackbar({
@@ -9,9 +10,15 @@ class OllyWeatherSnackbar extends SnackBar {
           content: Text(text ?? ""),
           backgroundColor: backgroundColor,
           behavior: SnackBarBehavior.floating,
-          margin: const EdgeInsets.all(12),
+          margin: const EdgeInsets.all(
+            OllyWeatherSpacing.regularPadding,
+          ),
           shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
+            borderRadius: BorderRadius.all(
+              Radius.circular(
+                OllyWeatherSpacing.tinyRadius,
+              ),
+            ),
           ),
         );
 

@@ -20,6 +20,10 @@ class Weather {
   final WeatherCondition condition;
   final DateTime date;
 
+  bool get isNight {
+    return date.hour >= 18 || date.hour <= 5;
+  }
+
   String get formattedTime {
     /// e.g 8 PM
     return DateFormat('hh a').format(date);

@@ -1,9 +1,11 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:olly_weather/constants/weather_condition.dart';
 import 'package:olly_weather/constants/weather_unit.dart';
 import 'package:olly_weather/models/weather.dart';
+import 'package:olly_weather/ui/theme/spacing.dart';
+import 'package:olly_weather/ui/theme/text.dart';
+import 'package:olly_weather/ui/theme/theme.dart';
+import 'package:olly_weather/ui/utils/asset_manager.dart';
 
 class WeatherCard extends StatelessWidget {
   const WeatherCard({
@@ -15,51 +17,35 @@ class WeatherCard extends StatelessWidget {
   final Weather weather;
   final WeatherUnit unit;
 
-  String _getWeatherIcon(Weather weather) {
-    final fileName = switch (weather.condition) {
-      WeatherCondition.thunderstorm => "thunderstorms",
-      WeatherCondition.drizzle => "drizzle",
-      WeatherCondition.rain => "rain",
-      WeatherCondition.snow => "snow",
-      WeatherCondition.mist => "mist",
-      WeatherCondition.smoke => "smoke",
-      WeatherCondition.haze => "haze",
-      WeatherCondition.dust => "dust",
-      WeatherCondition.fog => "fog",
-      WeatherCondition.sand => "sand",
-      WeatherCondition.tornado => "tornado",
-      WeatherCondition.clouds => "cloudy",
-      WeatherCondition.clear =>
-        weather.date.hour >= 18 || weather.date.hour <= 5
-            ? "clear-night"
-            : "clear-day",
-    };
-    return "assets/lottie/$fileName.json";
-  }
-
   @override
   Widget build(BuildContext context) {
+    final deviceWidth = MediaQuery.of(context).size.width;
+    final isWebDesign = deviceWidth > OllyWeatherTheme.mobileWidth;
+
     return Card(
       surfaceTintColor: Colors.white,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        padding: const EdgeInsets.symmetric(
+          vertical: OllyWeatherSpacing.tinyPadding,
+          horizontal: OllyWeatherSpacing.mediumPadding,
+        ),
         child: Column(
           children: [
             Row(
-              mainAxisSize: kIsWeb ? MainAxisSize.min : MainAxisSize.max,
+              mainAxisSize: isWebDesign ? MainAxisSize.min : MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   weather.formattedTime,
-                  style: const TextStyle(fontSize: 18),
+                  style: OllyWeatherText.titleStyle,
                   textAlign: TextAlign.end,
                 ),
-                const SizedBox(width: 10),
+                OllyWeatherSpacing.horizontalSpaceSmall,
                 const Text(" - "),
-                const SizedBox(width: 10),
+                OllyWeatherSpacing.horizontalSpaceSmall,
                 Text(
                   weather.description,
-                  style: const TextStyle(fontSize: 18),
+                  style: OllyWeatherText.titleStyle,
                 ),
               ],
             ),
@@ -67,33 +53,31 @@ class WeatherCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Lottie.asset(
-                  _getWeatherIcon(weather),
+                  AssetManager.getIconForWeather(weather),
                   height: 100,
                   width: 100,
                 ),
-                const SizedBox(height: 10),
+                OllyWeatherSpacing.horizontalSpaceSmall,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       "${weather.temperature} ${unit.simbol}",
-                      style: const TextStyle(fontSize: 24),
+                      style: OllyWeatherText.largeStyle,
                     ),
-                    const SizedBox(width: 20),
+                    OllyWeatherSpacing.horizontalSpaceRegular,
                     Column(
                       children: [
                         Text(
                           "${weather.minTemperature} ${unit.simbol}",
-                          style: const TextStyle(
+                          style: OllyWeatherText.titleStyle.copyWith(
                             color: Colors.blue,
-                            fontSize: 20,
                           ),
                         ),
                         Text(
                           "${weather.maxTemperature} ${unit.simbol}",
-                          style: const TextStyle(
+                          style: OllyWeatherText.titleStyle.copyWith(
                             color: Colors.red,
-                            fontSize: 20,
                           ),
                         ),
                       ],

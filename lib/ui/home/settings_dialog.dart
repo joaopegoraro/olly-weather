@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:olly_weather/constants/weather_unit.dart';
 import 'package:olly_weather/ui/components/dialog.dart';
+import 'package:olly_weather/ui/theme/spacing.dart';
 
 class SettingsDialog extends StatefulWidget {
   const SettingsDialog({
@@ -36,7 +37,7 @@ class _SettingsDialogState extends State<SettingsDialog> {
         mainAxisSize: MainAxisSize.min,
         children: [
           const Text("Update the temperature unit to be used"),
-          const SizedBox(height: 10),
+          OllyWeatherSpacing.verticalSpaceSmall,
           ListTile(
             title: const Text("Imperial"),
             onTap: () => _selectUnit(WeatherUnit.imperial),

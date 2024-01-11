@@ -8,6 +8,8 @@ import 'package:olly_weather/ui/home/home_model.dart';
 import 'package:olly_weather/ui/home/settings_dialog.dart';
 import 'package:olly_weather/ui/home/topbar.dart';
 import 'package:olly_weather/ui/home/weather_list.dart';
+import 'package:olly_weather/ui/theme/spacing.dart';
+import 'package:olly_weather/ui/theme/theme.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -78,7 +80,8 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           }
 
-          final isWebDesign = MediaQuery.of(context).size.width > 680;
+          final deviceWidth = MediaQuery.of(context).size.width;
+          final isWebDesign = deviceWidth > OllyWeatherTheme.mobileWidth;
           if (isWebDesign) {
             return Column(
               children: [
@@ -95,8 +98,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: SingleChildScrollView(
                     child: Center(
                       child: Container(
-                        constraints: const BoxConstraints(maxWidth: 1980),
-                        padding: const EdgeInsets.all(32),
+                        constraints: const BoxConstraints(
+                          maxWidth: OllyWeatherTheme.maxFrameWidth,
+                        ),
+                        padding: const EdgeInsets.all(
+                          OllyWeatherSpacing.largePadding,
+                        ),
                         child: model.weatherListByDate.isEmpty
                             ? EmptyListIndicator(
                                 refreshPage: () => model
@@ -132,7 +139,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ];
                   },
                   body: Container(
-                    padding: const EdgeInsets.all(32),
+                    padding: const EdgeInsets.all(
+                      OllyWeatherSpacing.largePadding,
+                    ),
                     child: model.weatherListByDate.isEmpty
                         ? EmptyListIndicator(
                             refreshPage: () => model

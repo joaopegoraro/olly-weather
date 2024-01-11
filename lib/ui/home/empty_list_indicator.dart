@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:olly_weather/ui/theme/spacing.dart';
 
 class EmptyListIndicator extends StatelessWidget {
   const EmptyListIndicator({
@@ -17,7 +18,7 @@ class EmptyListIndicator extends StatelessWidget {
           onPressed: refreshPage,
           icon: const Icon(Icons.gps_fixed),
         ),
-        const SizedBox(height: 20),
+        OllyWeatherSpacing.verticalSpaceRegular,
         const Text(
           "No weather data found. Try clicking on the tracking icon in the topbar to update your coordinates and fetch the weather data for your location",
           textAlign: TextAlign.center,
