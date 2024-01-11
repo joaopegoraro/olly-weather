@@ -1,16 +1,28 @@
 # olly_weather
 
-A new Flutter project.
+Test project for the Fullstack Flutter engineer position at Olly Olly
 
-## Getting Started
+✔️ User authentication
 
-This project is a starting point for a Flutter application.
+✔️ Hour-by-hour forecast for the next 5 days of the current location (user can update the current location by pressing a button)
 
-A few resources to get you started if this is your first Flutter project:
+✔️ User can choose their preferred temperature unit to display (metric, imperial, standard)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+✔️ Animated, precise icons for the various climate conditions
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+✔️ Web, mobile web and mobile app designs
+
+
+## Screenshots
+### Mobile
+<p float="left">
+  <img src="./screenshots/screenshot-mobile-1.png?raw=true" width="32%" />
+  <img src="./screenshots/screenshot-mobile-2.png?raw=true" width="32%" />
+  <img src="./screenshots/screenshot-mobile-3.png?raw=true" width="32%" />
+</p>
+
+### Web
+<p float="left">
+  <img src="./screenshots/screenshot-web-1.png?raw=true" width="100%" />
+  <img src="./screenshots/screenshot-web-2.png?raw=true" width="100%" />
+</p>
