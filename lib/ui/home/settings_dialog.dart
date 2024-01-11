@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:olly_weather/constants/weather_unit.dart';
 import 'package:olly_weather/ui/components/dialog.dart';
+import 'package:olly_weather/ui/notifiers/dark_mode_notifier.dart';
 import 'package:olly_weather/ui/theme/spacing.dart';
 
 class SettingsDialog extends StatefulWidget {
@@ -28,45 +30,59 @@ class _SettingsDialogState extends State<SettingsDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return OllyWeatherDialog(
-      title: "Settings",
-      firstButtonText: "Save",
-      onTapFirstButton: () => widget.onSave(selectedUnit),
-      secondButtonText: "Cancel",
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Text("Update the temperature unit to be used"),
-          OllyWeatherSpacing.verticalSpaceSmall,
-          ListTile(
-            title: const Text("Imperial"),
-            onTap: () => _selectUnit(WeatherUnit.imperial),
-            leading: Radio(
-              value: WeatherUnit.imperial,
-              groupValue: selectedUnit,
-              onChanged: _selectUnit,
+    return Consumer(builder: (context, ref, _) {
+      final darkModeNotifier = ref.read(darkModeNotifierProvider);
+      final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
+      return OllyWeatherDialog(
+        title: "Settings",
+        firstButtonText: "Save",
+        onTapFirstButton: () => widget.onSave(selectedUnit),
+        secondButtonText: "Cancel",
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              title: const Text("Dark mode"),
+              onTap: () => darkModeNotifier.setDarkMode(!isDarkMode),
+              trailing: Switch(
+                value: isDarkMode,
+                onChanged: darkModeNotifier.setDarkMode,
+              ),
             ),
-          ),
-          ListTile(
-            title: const Text("Metric"),
-            onTap: () => _selectUnit(WeatherUnit.metric),
-            leading: Radio(
-              value: WeatherUnit.metric,
-              groupValue: selectedUnit,
-              onChanged: _selectUnit,
+            OllyWeatherSpacing.verticalSpaceRegular,
+            const Text("Update the temperature unit to be used"),
+            OllyWeatherSpacing.verticalSpaceSmall,
+            ListTile(
+              title: const Text("Imperial"),
+              onTap: () => _selectUnit(WeatherUnit.imperial),
+              leading: Radio(
+                value: WeatherUnit.imperial,
+                groupValue: selectedUnit,
+                onChanged: _selectUnit,
+              ),
             ),
-          ),
-          ListTile(
-            title: const Text("Standard"),
-            onTap: () => _selectUnit(WeatherUnit.standard),
-            leading: Radio(
-              value: WeatherUnit.standard,
-              groupValue: selectedUnit,
-              onChanged: _selectUnit,
+            ListTile(
+              title: const Text("Metric"),
+              onTap: () => _selectUnit(WeatherUnit.metric),
+              leading: Radio(
+                value: WeatherUnit.metric,
+                groupValue: selectedUnit,
+                onChanged: _selectUnit,
+              ),
             ),
-          ),
-        ],
-      ),
-    );
+            ListTile(
+              title: const Text("Standard"),
+              onTap: () => _selectUnit(WeatherUnit.standard),
+              leading: Radio(
+                value: WeatherUnit.standard,
+                groupValue: selectedUnit,
+                onChanged: _selectUnit,
+              ),
+            ),
+          ],
+        ),
+      );
+    });
   }
 }

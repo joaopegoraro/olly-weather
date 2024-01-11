@@ -19,4 +19,13 @@ final class OllyWeatherTheme {
       seedColor: seedColor,
     ),
   );
+
+  static final darkThemeData = ThemeData(
+    fontFamily: 'Roboto',
+    useMaterial3: true,
+    colorScheme: ColorScheme.fromSeed(
+      brightness: Brightness.dark,
+      seedColor: seedColor,
+    ),
+  );
 }

@@ -1,9 +1,12 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl_standalone.dart';
 import 'package:olly_weather/ui/home/home_screen.dart';
+import 'package:olly_weather/ui/notifiers/dark_mode_notifier.dart';
 import 'package:olly_weather/ui/theme/theme.dart';
 
 void main() async {
@@ -27,16 +30,23 @@ void main() async {
   );
 }
 
-class OllyWeatherApp extends StatelessWidget {
+class OllyWeatherApp extends ConsumerWidget {
   const OllyWeatherApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final darkModeNotifier = ref.watch(darkModeNotifierProvider);
+    final platformBrightness = MediaQuery.of(context).platformBrightness;
+    final isDeviceInDarkMode = platformBrightness == Brightness.dark;
+    final isDarkMode = darkModeNotifier.isDarkMode ?? isDeviceInDarkMode;
+
     return MaterialApp(
       title: 'Olly Weather',
       debugShowCheckedModeBanner: false,
       home: const HomeScreen(),
       theme: OllyWeatherTheme.themeData,
+      darkTheme: OllyWeatherTheme.darkThemeData,
+      themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
     );
   }
 }

@@ -83,13 +83,13 @@ class HomeModel extends ViewModel<HomeEvent> {
   }
 
   Future<void> fetchWeatherUnit() async {
-    _weatherUnit = await _prefsRepository.findWeatherUnit();
+    _weatherUnit = await _prefsRepository.getWeatherUnit();
   }
 
   Future<void> updateWeatherUnit(WeatherUnit newUnit) async {
     updateUi(() => _isLoading = true);
 
-    await _prefsRepository.saveWeatherUnit(newUnit);
+    await _prefsRepository.setWeatherUnit(newUnit);
     showSnackbar(
       "Settings updated successfully!",
       HomeEvent.showSnackbarSuccess,
@@ -106,7 +106,7 @@ class HomeModel extends ViewModel<HomeEvent> {
       updateUi(() => _isLoading = true);
 
       final (latitude, longitude) = await _geoService.getCoordinates();
-      await _prefsRepository.saveCoordinates(latitude, longitude);
+      await _prefsRepository.setCoordinates(latitude, longitude);
 
       showSnackbar(
         "Coordinates updated successfully!",
@@ -122,7 +122,7 @@ class HomeModel extends ViewModel<HomeEvent> {
   Future<void> updateWeather() async {
     updateUi(() => _isLoading = true);
 
-    final (latitude, longitude) = await _prefsRepository.findCoordinates();
+    final (latitude, longitude) = await _prefsRepository.getCoordinates();
     if (latitude == null || longitude == null) {
       updateUi(() => _isLoading = false);
       return showSnackbar(
