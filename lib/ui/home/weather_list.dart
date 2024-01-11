@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:olly_weather/constants/weather_unit.dart';
 import 'package:olly_weather/models/weather.dart';
@@ -9,10 +8,12 @@ class WeatherList extends StatefulWidget {
     super.key,
     required this.weatherListByDate,
     required this.weatherUnit,
+    required this.isWebDesign,
   });
 
   final Map<DateTime, List<Weather>> weatherListByDate;
   final WeatherUnit weatherUnit;
+  final bool isWebDesign;
 
   @override
   State<WeatherList> createState() => WeatherListState();
@@ -24,14 +25,14 @@ class WeatherListState extends State<WeatherList> {
   @override
   void initState() {
     super.initState();
-    if (!kIsWeb) {
+    if (!widget.isWebDesign) {
       _pageController = PageController(initialPage: 0);
     }
   }
 
   @override
   void dispose() {
-    if (!kIsWeb) {
+    if (!widget.isWebDesign) {
       _pageController?.dispose();
       _pageController = null;
     }
@@ -40,7 +41,7 @@ class WeatherListState extends State<WeatherList> {
 
   @override
   Widget build(BuildContext context) {
-    if (kIsWeb) {
+    if (widget.isWebDesign) {
       return ListView.builder(
         shrinkWrap: true,
         itemCount: widget.weatherListByDate.length,

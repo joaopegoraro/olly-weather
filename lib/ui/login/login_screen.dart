@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mvvm_riverpod/mvvm_riverpod.dart';
 import 'package:olly_weather/ui/components/navigator.dart';
@@ -70,7 +69,8 @@ class _LoginScreenState extends State<LoginScreen> {
             );
           }
 
-          if (kIsWeb) {
+          final isWebDesign = MediaQuery.of(context).size.width > 680;
+          if (isWebDesign) {
             return Container(
               decoration: BoxDecoration(
                 color: Theme.of(context).primaryColor,

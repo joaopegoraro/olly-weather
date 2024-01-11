@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:vector_graphics/vector_graphics_compat.dart';
@@ -23,7 +22,8 @@ class Topbar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    if (kIsWeb && MediaQuery.of(context).size.width > 680) {
+    final isWebDesign = MediaQuery.of(context).size.width > 680;
+    if (isWebDesign) {
       return Container(
         height: 80,
         constraints: const BoxConstraints(maxWidth: 1980),
@@ -38,12 +38,16 @@ class Topbar extends StatelessWidget implements PreferredSizeWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Expanded(
+            const Flexible(
               flex: 3,
-              child: SvgPicture(
-                AssetBytesLoader('assets/vectors/logo.svg.vec'),
+              child: Padding(
+                padding: EdgeInsets.all(18.0),
+                child: SvgPicture(
+                  AssetBytesLoader('assets/vectors/logo.svg.vec'),
+                ),
               ),
             ),
+            const Spacer(),
             Expanded(
               flex: 4,
               child: Text(

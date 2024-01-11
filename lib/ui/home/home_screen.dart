@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mvvm_riverpod/mvvm_riverpod.dart';
 import 'package:olly_weather/ui/components/dialog.dart';
@@ -78,7 +77,8 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           }
 
-          if (kIsWeb && MediaQuery.of(context).size.width > 680) {
+          final isWebDesign = MediaQuery.of(context).size.width > 680;
+          if (isWebDesign) {
             return Column(
               children: [
                 Topbar(
@@ -102,6 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     .then((_) => model.updateWeather()),
                               )
                             : WeatherList(
+                                isWebDesign: isWebDesign,
                                 weatherListByDate: model.weatherListByDate,
                                 weatherUnit: model.weatherUnit,
                               ),
@@ -136,6 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 .then((_) => model.updateWeather()),
                           )
                         : WeatherList(
+                            isWebDesign: isWebDesign,
                             weatherListByDate: model.weatherListByDate,
                             weatherUnit: model.weatherUnit,
                           ),
