@@ -78,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           }
 
-          if (kIsWeb) {
+          if (kIsWeb && MediaQuery.of(context).size.width > 680) {
             return Column(
               children: [
                 Topbar(
@@ -91,18 +91,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Expanded(
                   child: SingleChildScrollView(
-                    child: Container(
-                      padding: const EdgeInsets.all(32),
-                      child: model.weatherListByDate.isEmpty
-                          ? EmptyListIndicator(
-                              refreshPage: () => model
-                                  .updateCoordinates()
-                                  .then((_) => model.updateWeather()),
-                            )
-                          : WeatherList(
-                              weatherListByDate: model.weatherListByDate,
-                              weatherUnit: model.weatherUnit,
-                            ),
+                    child: Center(
+                      child: Container(
+                        constraints: const BoxConstraints(maxWidth: 1980),
+                        padding: const EdgeInsets.all(32),
+                        child: model.weatherListByDate.isEmpty
+                            ? EmptyListIndicator(
+                                refreshPage: () => model
+                                    .updateCoordinates()
+                                    .then((_) => model.updateWeather()),
+                              )
+                            : WeatherList(
+                                weatherListByDate: model.weatherListByDate,
+                                weatherUnit: model.weatherUnit,
+                              ),
+                      ),
                     ),
                   ),
                 ),
