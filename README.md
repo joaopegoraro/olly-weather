@@ -3,15 +3,31 @@
 ## Index
 
 - [About](#about)
+- [Features](#features)
 - [Images](#images)
-- [Libraries](#tech)
+- [Libraries](#libs)
 - [API](#api)
 - [How to run?](#how-to-run)
-- [Features](#features)
 
 ## [About](#about)
 
 Test project for the Fullstack Flutter engineer position at [Olly Olly](https://www.ollyolly.com/).
+
+## [Features](#features)
+
+✔️ User authentication
+
+✔️ Hour-by-hour forecast for the next 5 days of the current location (user can update the current location by pressing a button)
+
+✔️ User can choose their preferred temperature unit to display (metric, imperial, standard)
+
+✔️ Animated icons for the various climate conditions
+
+✔️ Web, mobile web and mobile app designs
+
+✔️ Dark mode
+
+✔️ Navigation animation
 
 ## [Images](#images)
 
@@ -29,15 +45,17 @@ Test project for the Fullstack Flutter engineer position at [Olly Olly](https://
 
 ### Web
 <p float="left">
-  <img src="./screenshots/screenshot-web-1.png?raw=true" width="100%" />
-  <img src="./screenshots/screenshot-web-2.png?raw=true" width="100%" />
+  <img src="./screenshots/screenshot-web-1.png?raw=true" width="47%" />
+  <img src="./screenshots/screenshot-web-2.png?raw=true" width="47%" />
 </p>
 <p float="left">
-  <img src="./screenshots/screenshot-web-3.png?raw=true" width="100%" />
-  <img src="./screenshots/screenshot-web-4.png?raw=true" width="100%" />
+  <img src="./screenshots/screenshot-web-3.png?raw=true" width="47%" />
+  <img src="./screenshots/screenshot-web-4.png?raw=true" width="47%" />
 </p>
 
-## [Libraries](#tech)
+
+## [Libraries](#libs)
+
 
 - [flutter_dotenv](https://pub.dev/packages/flutter_dotenv)
   - Used to store the API information
@@ -73,21 +91,5 @@ Since I commited the [`.env`](/.env) file, the project is plug and play:
 
 - Download or clone the project.
 - `flutter run` in the project root.
-- If `flutter run -d chrome`, make sure to **NOT** use the HTML rendering, otherwise the Lottie animations won't work (see [this](https://stackoverflow.com/a/73699401) for more details).
-  
-## [Features](#features)
-
-✔️ User authentication
-
-✔️ Hour-by-hour forecast for the next 5 days of the current location (user can update the current location by pressing a button)
-
-✔️ User can choose their preferred temperature unit to display (metric, imperial, standard)
-
-✔️ Animated icons for the various climate conditions
-
-✔️ Web, mobile web and mobile app designs
-
-✔️ Dark mode
-
-✔️ Navigation animation
-
+- If `flutter run -d chrome`, make sure to **NOT** use the HTML renderer, otherwise the Lottie animations won't work (see [this](https://stackoverflow.com/a/73699401) for more details).
+  - To make sure it works, you can use `flutter run -d chrome --web-renderer canvaskit`.
