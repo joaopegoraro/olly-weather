@@ -21,7 +21,7 @@ class Weather {
   final DateTime date;
 
   String get formattedTime {
-    /// e.g 8pm
+    /// e.g 8 PM
     return DateFormat('hh a').format(date);
   }
 

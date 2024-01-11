@@ -65,7 +65,8 @@ class _HomeScreenState extends State<HomeScreen> {
           // after the first draw
           WidgetsBinding.instance.addPostFrameCallback(
             (_) => model
-                .fetchWeatherUnit()
+                .checkForAuthentication()
+                .then((_) => model.fetchWeatherUnit())
                 .then((_) => model.updateCoordinates())
                 .then((_) => model.updateWeather()),
           );

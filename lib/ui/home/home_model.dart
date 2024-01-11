@@ -64,6 +64,17 @@ class HomeModel extends ViewModel<HomeEvent> {
     emitEvent(HomeEvent.openLogoutDialog);
   }
 
+  Future<void> checkForAuthentication() async {
+    updateUi(() => _isLoading = true);
+
+    final isAuthenticated = await _authService.isUserAuthenticated();
+    if (!isAuthenticated) {
+      emitEvent(HomeEvent.navigateToLogin);
+    }
+
+    updateUi(() => _isLoading = false);
+  }
+
   Future<void> logout() async {
     await _authService.logoutUser();
     await _prefsRepository.clear();
