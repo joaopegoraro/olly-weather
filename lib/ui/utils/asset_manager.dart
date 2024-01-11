@@ -8,24 +8,24 @@ class AssetManager {
   static const lottieAssetsPath = "$assetsPath/lottie";
 
   static final conditionIconMap = <WeatherCondition, String>{
-    WeatherCondition.thunderstorm: "thunderstorms",
-    WeatherCondition.drizzle: "drizzle",
-    WeatherCondition.rain: "rain",
-    WeatherCondition.snow: "snow",
-    WeatherCondition.mist: "mist",
-    WeatherCondition.smoke: "smoke",
-    WeatherCondition.haze: "haze",
-    WeatherCondition.dust: "dust",
-    WeatherCondition.fog: "fog",
-    WeatherCondition.sand: "sand",
-    WeatherCondition.tornado: "tornado",
-    WeatherCondition.clouds: "cloudy",
-    WeatherCondition.clear: "clear-day",
+    WeatherCondition.thunderstorm: "thunderstorms.json",
+    WeatherCondition.drizzle: "drizzle.json",
+    WeatherCondition.rain: "rain.json",
+    WeatherCondition.snow: "snow.json",
+    WeatherCondition.mist: "mist.json",
+    WeatherCondition.smoke: "smoke.json",
+    WeatherCondition.haze: "haze.json",
+    WeatherCondition.dust: "dust.json",
+    WeatherCondition.fog: "fog.json",
+    WeatherCondition.sand: "sand.json",
+    WeatherCondition.tornado: "tornado.json",
+    WeatherCondition.clouds: "cloudy.json",
+    WeatherCondition.clear: "clear-day.json",
   };
 
   static String getIconForWeather(Weather weather) {
     if (weather.condition == WeatherCondition.clear && weather.isNight) {
-      return "clear-night";
+      return "$lottieAssetsPath/clear-night.json";
     }
 
     return "$lottieAssetsPath/${conditionIconMap[weather.condition]}";
