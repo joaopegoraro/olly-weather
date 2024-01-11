@@ -83,6 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
             return Column(
               children: [
                 Topbar(
+                  isWebDesign: isWebDesign,
                   title: model.cityName ?? "Welcome!",
                   onGeolocate: () => model
                       .updateCoordinates()
@@ -120,6 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   headerSliverBuilder: (_, __) {
                     return [
                       Topbar(
+                        isWebDesign: isWebDesign,
                         title: model.cityName ?? "Welcome!",
                         onGeolocate: () => model
                             .updateCoordinates()
