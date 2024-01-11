@@ -79,7 +79,7 @@ class Topbar extends StatelessWidget implements PreferredSizeWidget {
                       "Find your location",
                       maxLines: 2,
                       style: OllyWeatherText.regularStyle.copyWith(
-                        color: colorScheme.onPrimary,
+                        color: colorScheme.primary,
                       ),
                     ),
                   ),
